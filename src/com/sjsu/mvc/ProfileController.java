@@ -143,7 +143,7 @@ public class ProfileController {
 			
 		return result;
 	}
-	@RequestMapping(value="/profile/{email}" ,method = RequestMethod.POST) 
+	@RequestMapping(value="/profile/{email}" ,method = RequestMethod.POST) 	
 	public void sendEmail(@PathVariable String email,Model model,HttpServletRequest request){
         Profile p = new Profile();
          s=Math.round(Math.random() * 100000);
@@ -151,7 +151,7 @@ public class ProfileController {
         System.out.println(email);
         //MailService ms=new MailService();
        // MailService.sendSimpleMail();
-        final String emailTo = email;//+".com";
+        final String emailTo = email+".com";
 	    final String subject = "Verification" ;
 	    final String yourmailid = "bhavana.bhasker@gmail.com";
 	    final String message = "Hi Your code "+s;
@@ -177,11 +177,19 @@ public class ProfileController {
 	     
 	    }
 	    });
+	
 
 	}
 	@RequestMapping(value="/profile",params = {"firstName", "lastName", "email", "password","code"},method = RequestMethod.POST) 
 	public String createOrUpdate(Model model,HttpServletRequest request) {
-        Profile p = new Profile();
+       
+		if(this.personService.checkUser(request.getParameter("email")) == true){
+			model.addAttribute("Errormsg","User already exists");
+			
+			return "index";
+		}
+	else{
+		Profile p = new Profile();
      
         p.setFirstName(request.getParameter("firstName"));
         p.setLastName(request.getParameter("lastName"));
@@ -198,11 +206,10 @@ public class ProfileController {
         else{
     		model.addAttribute("Errormsg","User is not created as verification code did not match. Try Again");
     		}
-	
-        
 
 		return "index";
-	} 
+	}
+	}
 	@RequestMapping(value="/login",params = {"email", "password"},method = RequestMethod.POST)
 	public String checkLogin(Model model, HttpServletRequest request,HttpServletResponse response) { 
 		String emailstr = request.getParameter("email");

@@ -11,4 +11,5 @@ public interface PersonService {
     public Profile getPersonById(String id);
     public void remove(String id);
     public boolean checkLogin(String email,String password);
+    public boolean checkUser(String email);
 }

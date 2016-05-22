@@ -220,7 +220,8 @@ BlobstoreService blobstoreService = BlobstoreServiceFactory.getBlobstoreService(
 						});
 						
 					});
-					</script>
+										
+</script>
 <script type="text/javascript" src="../js/jquery.jscrollpane.min.js"></script>
 		<script type="text/javascript" id="sourcecode">
 			$(function()
@@ -795,12 +796,52 @@ BlobstoreService blobstoreService = BlobstoreServiceFactory.getBlobstoreService(
 	
 		<br> <br>
 <p> Deliver on </p>
-<input name ="date_input" dateformat="MM/DD/YYYY" type="date" required/>
- <input type="time" name="usr_time" step = "1" required />
+<input name ="date_input" dateformat="YYYY-MM-DD" type="date" id="datefield" required/>
+ <input type="time" name="usr_time" step = "1" id="timefield" min="06:00" max="21:00" required />
 <br><br>
 <input type = "hidden" id = "pat" name = "path" />
 		<input type="submit" value="order" id="order" />
 		</form>
+		
+<script type="text/javascript">		
+							/*Date limiting function*/
+var today = new Date();
+var dd = today.getDate();
+var mm = today.getMonth()+1; //January is 0!
+var yyyy = today.getFullYear();
+ if(dd<10){
+        dd='0'+dd
+    } 
+    if(mm<10){
+        mm='0'+mm
+    } 
+
+today = yyyy+'-'+mm+'-'+dd;
+
+var next = new Date();
+next.setDate(next.getDate()+30);
+
+var d = next.getDate();
+var m = next.getMonth()+1; //January is 0!
+var yy = next.getFullYear();
+ if(d<10){
+        d='0'+d
+    } 
+    if(m<10){
+        m='0'+m
+    } 
+
+
+next = yy+'-'+m+'-'+d;
+
+
+document.getElementById("datefield").setAttribute("min", today);
+document.getElementById("datefield").setAttribute("max", next);
+</script>
+				
+		
+		
+		
 		
 		
 		
